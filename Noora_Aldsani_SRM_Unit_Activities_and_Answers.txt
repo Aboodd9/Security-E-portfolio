@@ -1,0 +1,133 @@
+NOORA ALDSANI
+SECURITY AND RISK MANAGEMENT JULY 2026
+BRIEF UNIT ACTIVITIES AND ANSWERS
+19 October 2026
+
+Scope: The official detailed weekly activity schedule was not supplied. This is an illustrative 12-unit practice sequence based on the module overview and actual reports. Original Unit 6 and Unit 11 documents are identified explicitly. Newly prepared examples do not establish earlier posts, meetings or completion.
+
+UNIT 1 — ASSETS AND OBJECTIVES
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Identify product quality, customer information and stock visibility as assets. A useful risk statement connects an asset, threat, vulnerability and business consequence.
+Example: Asset = warehouse stock record; threat = ransomware; vulnerability = unsupported endpoint and shared network; consequence = lost stock visibility and interrupted fulfilment. Check the actual endpoint and backup state before assigning a final rating.
+
+UNIT 2 — QUALITATIVE ASSESSMENT
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Define a likelihood horizon and impact thresholds before assigning ratings. The group feedback identifies this as an improvement; no historical scale exercise was supplied.
+Example: Define impact by lost trading time, affected records and potential product harm. Do not label a risk High without explaining the threshold. An ordinal rating is not a probability and should not be presented as 80% or another numerical likelihood.
+
+UNIT 3 — STRIDE
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Map spoofing, tampering, repudiation, disclosure, denial of service and privilege escalation to specific flows. Treat food safety through complementary operational scenarios.
+Example: Spoofing = stolen staff identity; tampering = changed batch record; repudiation = disputed stock edit; disclosure = exposed delivery details; denial of service = unavailable ordering; privilege escalation = warehouse user gains administrator rights. Identify controls and test evidence for each.
+
+UNIT 4 — OPTIONS AND UNCERTAINTY
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Compare the existing operation with selective digitalisation. Test the 50%, 24% and 33% claims as assumptions, not established business forecasts.
+Example: A 50% demand increase is a capacity stress scenario. Test packing time, staffing and margin before promising growth. A 24% reduction in purchase price is not a 24% saving in total cost; include transport, delays, spoilage and working capital.
+
+UNIT 5 — CONTROLS AND OWNERSHIP
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Assign an accountable owner, deadline and verification method. Planned MFA or backups do not establish that the controls operate effectively.
+Example: Proposed owner Cathy checks privileged-access controls by a stated date. Residual risk remains provisional until the check is complete. A signed policy alone does not show that account removal or restoration actually works.
+
+UNIT 6 — GROUP REPORT
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Original artefact supplied. Noora’s peer account identifies the phased recommendation as her contribution. Tutor feedback records 77% and requests a transparent risk register.
+Example: The recommendation is to secure existing systems, pilot click-and-collect and traceability, retain local sourcing initially, and expand only against agreed criteria. The peer evaluation attributes the recommendation to Noora; the entire group report should still be acknowledged as shared work.
+
+UNIT 7 — QUANTITATIVE DEFINITIONS
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Define quality failure per delivered batch and qualifying disruption per month. Keep these denominators separate when explaining results.
+Example: Quality failure concerns a randomly selected delivered batch. Supply disruption concerns at least one qualifying delay during a month. A 5.06% batch-level scenario cannot be compared directly with a 19.47% monthly network scenario as though they were equivalent customer risks.
+
+UNIT 8 — CONDITIONAL FAULT TREES
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Use one minus the product of complements within each assumed condition, then weight normal and stressed conditions. Independence remains an assumption.
+Example: For two conditionally independent events with probabilities 0.10 and 0.20, an OR outcome has probability 1-(0.9*0.8)=0.28. An AND outcome has probability 0.10*0.20=0.02. These calculations require the stated independence assumption.
+
+UNIT 9 — CONTROL SENSITIVITY
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Vary stress and individual event inputs. The executive-summary feedback requests control-specific evidence instead of uniformly halving every probability.
+Example: Change only the storage-event probability to examine a proposed sensor control. Keep other inputs fixed, then test shared-cause assumptions. A scenario that halves every input estimates an assumed improvement, not evidence of control effectiveness.
+
+UNIT 10 — CONTINUITY AND RECOVERY
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Separate the under-60-second interruption target from the maximum-60-second data-loss target. Test the complete transaction path and corruption recovery separately.
+Example: The proposed recovery budget is 10 seconds detection + 15 seconds fencing/promotion + 15 seconds routing/reconnection + 5 seconds validation = 45 seconds. This is a target, not an observed test. A safe design must also prevent two writers accepting conflicting transactions.
+
+UNIT 11 — INDIVIDUAL SUMMARY
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Original artefact supplied. Feedback records 74%, praising defined calculations while requesting explicit quorum design, current technical sources and clearer results presentation.
+Example: The summary reports assumed normal/stress fault-tree results and proposes synchronous data replication, fencing and payment reconciliation. The assessor requests explicit quorum design, more current official documentation and a clearer compact results display. This is design feedback, not evidence that the architecture ran.
+
+UNIT 12 — REFLECTION AND EVIDENCE
+Activity: Explain the theme and apply it to Pampered Pets.
+Brief answer: Use the reports, peer account and feedback to evaluate change. Add genuine weekly artefacts where available; newly prepared notes do not establish earlier participation.
+Example: WHAT = the report left residual risk unowned; SO WHAT = a recommendation cannot be executed or accepted transparently; NOW WHAT = assign owners, dates, verification and acceptance authority. Add the student number and accessible portfolio URL before submission.
+
+RECALCULATING THE INDIVIDUAL SUMMARY
+The following code uses the supplied analyst assumptions. It does not collect empirical data. Copy into a Python 3 file to reproduce the arithmetic.
+
+import math
+
+def union_probability(probabilities):
+    if any(p < 0 or p > 1 for p in probabilities):
+        raise ValueError("Each probability must be between zero and one")
+    return 1 - math.prod(1-p for p in probabilities)
+
+def conditional_result(normal, stress, stress_weight):
+    return ((1-stress_weight)*union_probability(normal)
+            + stress_weight*union_probability(stress))
+
+quality_normal = [0.010, 0.015, 0.008, 0.005]
+quality_stress = [0.050, 0.060, 0.040, 0.030]
+supply_normal = [0.060, 0.040, 0.030, 0.020, 0.015]
+supply_stress = [0.250, 0.180, 0.120, 0.100, 0.080]
+for label, normal, stress in [
+    ("Quality per delivered batch", quality_normal, quality_stress),
+    ("Supply disruption per month", supply_normal, supply_stress)
+]:
+    baseline = conditional_result(normal, stress, 0.10)
+    improved = conditional_result([p/2 for p in normal],
+                                  [p/2 for p in stress], 0.05)
+    print(f"{label}: baseline {baseline:.4%}; assumed improvement {improved:.4%}")
+    for weight in [0.05, 0.20]:
+        print(f"  Stress weight {weight:.2f}: "
+              f"{conditional_result(normal, stress, weight):.4%}")
+
+OUTPUT FROM RECOMPUTATION
+Quality per delivered batch: baseline 5.0583%; assumed improvement 2.2281%
+  Stress weight 0.05: 4.4035%
+  Stress weight 0.20: 6.3678%
+Supply disruption per month: baseline 19.4730%; assumed improvement 9.1846%
+  Stress weight 0.05: 17.4888%
+  Stress weight 0.20: 23.4414%
+
+
+Interpretation: The arithmetic matches the supplied summary after rounding. This does not validate the probability inputs, independence assumptions, control effectiveness or real business performance. Sensitivity ranges are not statistical confidence intervals.
+
+EXAMPLE RISK REGISTER ENTRY
+Risk: Account takeover permits unauthorised changes to product or batch information.
+Asset and consequence: Integrity of product records; incorrect dispatch or unsafe release.
+Inherent judgement: Provisional medium likelihood/high impact, pending defined scales and evidence.
+Treatment: Unique access, MFA, restricted privileges, reviewed product changes and protected logs.
+Proposed owner and review: Technology lead and quality owner before pilot expansion.
+Evidence: Approved access tests, account review and traceable change records.
+Residual judgement: Reassess after checks; do not claim a measured reduction from the presence of a control alone.
+
+ASSURANCE REFERENCES
+Use ISO/IEC 27001:2022 for management-system requirements and ISO/IEC 27002:2022 for control guidance. Neither establishes that Pampered Pets is compliant or certified. For breach decisions, consult current applicable regulatory guidance, document the facts and assess notification duties.
+
+REFERENCES
+
+Amazon Web Services (no date) Disaster recovery options in the cloud. Disaster Recovery of Workloads on AWS. Available at: https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html (Accessed: 19 October 2026).
+Group 3 (2026) Risk identification report Pampered Pets selective digitalisation as a resilience strategy. SRM_PCOM7E July 2026. Unpublished student group report. Supplied document.
+Information Commissioner’s Office (ICO) (no date) Personal data breaches a guide. Available at: https://ico.org.uk/for-organisations/report-a-breach/personal-data-breach/personal-data-breaches-a-guide/ (Accessed: 19 October 2026).
+ISO/IEC (2022a) ISO/IEC 27001:2022 Information security, cybersecurity and privacy protection Information security management systems Requirements. Geneva: International Organization for Standardization. Available at: https://www.iso.org/standard/27001 (Accessed: 19 October 2026).
+ISO/IEC (2022b) ISO/IEC 27002:2022 Information security, cybersecurity and privacy protection Information security controls. Geneva: International Organization for Standardization. Available at: https://www.iso.org/standard/75652.html (Accessed: 19 October 2026).
+Joint Task Force Transformation Initiative (2012) Guide for conducting risk assessments. NIST SP 800-30 Rev. 1. Gaithersburg, MD: NIST. doi: 10.6028/NIST.SP.800-30r1.
+Noora (2026a) Updated peer evaluation Group 3. Name recorded in the source: Noora Al-Adsani. Unpublished student document. Supplied document.
+Noora (2026b) Executive assessment of international procurement and warehouse automation. Individual Project Executive Summary. SRM_PCOM7E July 2026. Unpublished student document. Supplied as Individual Summary.docx.
+Rolfe, G., Freshwater, D. and Jasper, M. (2001) Critical reflection in nursing and the helping professions: a user’s guide. Basingstoke: Palgrave Macmillan.
+Shevchenko, N., Chick, T.A., O’Riordan, P., Scanlon, T.P. and Woody, C. (2018) Threat modeling A summary of available methods. Pittsburgh, PA: Carnegie Mellon University Software Engineering Institute. Available at: https://www.sei.cmu.edu/library/threat-modeling-a-summary-of-available-methods/ (Accessed: 19 October 2026).
+University of Essex Online (2026) Security and Risk Management assessment instructions and feedback. SRM_PCOM7E July 2026. Text supplied in Pasted text(20261019-193950).txt. Group report 77%; individual summary 74%. Grades provisional.
